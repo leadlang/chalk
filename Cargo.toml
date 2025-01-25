@@ -1,7 +1,10 @@
 [package]
 name = "chalk_rs"
-version = "1.0.1"
-authors = ["Botahamec <botahamec@outlook.com>"]
+version = "1.1.0"
+authors = [
+	"Botahamec <botahamec@outlook.com>",
+	"Akshanabha Chakraborty <ahqsecret@gmail.com>",
+]
 edition = "2018"
 description = "A crate which adds colors and styles to your terminal program"
 readme = "README.md"
@@ -9,17 +12,18 @@ license-file = "LICENSE.md"
 repository = "https://github.com/mrw1593/chalk_rs"
 keywords = ["chalk", "color", "style", "terminal", "cli"]
 categories = ["command-line-interface"]
-exclude = [
-	".github/*",
-	"doc/*",
-	"Makefile.toml",
-	"rustfmt.toml"
-]
+exclude = [".github/*", "doc/*", "Makefile.toml", "rustfmt.toml"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [target.'cfg(windows)'.dependencies]
-winapi = {version = "0.3.8", features = ["consoleapi", "processenv", "winbase"]}
+windows = { version = ">=0.57.0", features = [
+	"Win32_Foundation",
+	"Win32_System_Console",
+] }
+# winapi = {version = "0.3.8", features = ["consoleapi", "processenv", "winbase"]}
 
 [profile.release]
 lto = true
+
+[dependencies]

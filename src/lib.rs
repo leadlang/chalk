@@ -48,12 +48,7 @@ use std::fmt::Display;
 use std::string::ToString;
 
 #[cfg(windows)]
-use winapi::{
-	shared::minwindef::DWORD, um::consoleapi::GetConsoleMode,
-	um::consoleapi::SetConsoleMode, um::processenv::GetStdHandle,
-	um::winbase::STD_OUTPUT_HANDLE,
-	um::wincon::ENABLE_VIRTUAL_TERMINAL_PROCESSING,
-};
+use windows::Win32::System::Console::{CONSOLE_MODE, GetConsoleMode, SetConsoleMode, GetStdHandle, STD_OUTPUT_HANDLE, ENABLE_VIRTUAL_TERMINAL_PROCESSING};
 
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 enum ChalkType {
@@ -194,11 +189,14 @@ impl Chalk {
 			static mut IS_SETUP: bool = false;
 
 			if !IS_SETUP {
-				let handle = GetStdHandle(STD_OUTPUT_HANDLE);
-				let mut dw_mode: DWORD = 0;
-				dw_mode |= GetConsoleMode(handle, &mut dw_mode) as u32;
+				let handle = GetStdHandle(STD_OUTPUT_HANDLE).expect("Unable to get STD Handle");
+				let mut dw_mode = CONSOLE_MODE(0);
+				
+				GetConsoleMode(handle, &mut dw_mode).expect("Unable to get console mode");
+
 				dw_mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-				SetConsoleMode(handle, dw_mode);
+				
+				SetConsoleMode(handle, dw_mode).expect("Unable to set console mode");
 
 				IS_SETUP = true;
 			}
