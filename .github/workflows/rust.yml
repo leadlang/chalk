@@ -18,7 +18,7 @@ jobs:
         with:
           command: build
           toolchain: stable
-          args: --target arm64ec-pc-windows-msvc
+          args: --example rgb_color --target arm64ec-pc-windows-msvc
 
   test:
     name: Test Suite
