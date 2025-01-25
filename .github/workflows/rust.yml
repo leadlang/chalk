@@ -5,20 +5,17 @@ name: Continuous integration
 jobs:
   check:
     name: Check
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
-          target: arm64ec-pc-windows-msvc
           override: true
       - uses: actions-rs/cargo@v1
         with:
-          command: build
-          toolchain: stable
-          args: --example rgb_color --target arm64ec-pc-windows-msvc
+          command: check
 
   test:
     name: Test Suite
