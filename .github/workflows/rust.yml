@@ -12,10 +12,13 @@ jobs:
         with:
           profile: minimal
           toolchain: stable
+          target: arm64ec-pc-windows-msvc
           override: true
       - uses: actions-rs/cargo@v1
         with:
-          command: check
+          command: build
+          toolchain: stable
+          args: --target arm64ec-pc-windows-msvc
 
   test:
     name: Test Suite
