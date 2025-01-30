@@ -1,5 +1,5 @@
 [package]
-name = "chalk_rs"
+name = "lealang_chalk_rs"
 version = "1.1.0"
 authors = [
 	"Botahamec <botahamec@outlook.com>",
