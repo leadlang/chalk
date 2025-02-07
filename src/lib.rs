@@ -189,16 +189,17 @@ impl Chalk {
 			static mut IS_SETUP: bool = false;
 
 			if !IS_SETUP {
-				let handle = GetStdHandle(STD_OUTPUT_HANDLE).expect("Unable to get STD Handle");
-				let mut dw_mode = CONSOLE_MODE(0);
+				if let Ok(handle) = GetStdHandle(STD_OUTPUT_HANDLE) {
+					let mut dw_mode = CONSOLE_MODE(0);
 				
-				GetConsoleMode(handle, &mut dw_mode).expect("Unable to get console mode");
-
-				dw_mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+					if let Ok(_) = GetConsoleMode(handle, &mut dw_mode) {
+						dw_mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 				
-				SetConsoleMode(handle, dw_mode).expect("Unable to set console mode");
+						let _ = SetConsoleMode(handle, dw_mode);
 
-				IS_SETUP = true;
+						IS_SETUP = true;
+					}
+				}
 			}
 		}
 
