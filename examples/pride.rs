@@ -1,5 +1,5 @@
-extern crate chalk_rs;
-use chalk_rs::Chalk;
+extern crate lealang_chalk_rs;
+use lealang_chalk_rs::Chalk;
 
 const LINE_LENGTH: usize = 32;
 

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":["chalk_trait_fns","enum_default","enum_display","enum_fmt_impl","enum_impls","fn_alias","impl_enums"],"struct":["Chalk"]};

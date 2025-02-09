@@ -126,6 +126,7 @@ pub struct Chalk {
 	foreground: ChalkType,
 	background: ChalkType,
 	style: StyleMap,
+	supports: bool
 }
 
 impl Chalk {
@@ -183,6 +184,10 @@ impl Chalk {
 	/// // the chalk can be used here
 	/// ```
 	pub fn new() -> Self {
+		let mut out = Self::default();
+
+		out.supports = true;
+
 		// makes it work on windows
 		#[cfg(windows)]
 		unsafe {
@@ -198,12 +203,14 @@ impl Chalk {
 						let _ = SetConsoleMode(handle, dw_mode);
 
 						IS_SETUP = true;
+					} else {
+						out.supports = false;
 					}
 				}
 			}
 		}
 
-		Self::default()
+		out
 	}
 
 	/// Formats a string using the style of the given [`Chalk`].
@@ -232,6 +239,10 @@ impl Chalk {
 	/// let text = chalk.yellow().string(&"this is yellow");
 	/// ```
 	pub fn string(&self, string: &dyn ToString) -> String {
+		if !self.supports {
+			return string.to_string();
+		}
+
 		format!("{}{}\x1b[m", self.to_string(), string.to_string())
 	}
 
@@ -262,6 +273,10 @@ impl Chalk {
 	/// chalk.yellow().print(&"this is yellow");
 	/// ```
 	pub fn print(&self, string: &dyn ToString) -> String {
+		if !self.supports {
+			return string.to_string();
+		}		
+
 		let output = self.string(string);
 		print!("{}", output);
 		output
@@ -294,6 +309,10 @@ impl Chalk {
 	/// chalk.yellow().println(&"this is yellow");
 	/// ```
 	pub fn println(&self, string: &dyn ToString) -> String {
+		if !self.supports {
+			return string.to_string();
+		}
+		
 		let output = self.string(string);
 		println!("{}", output);
 		output

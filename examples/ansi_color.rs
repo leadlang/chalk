@@ -1,5 +1,5 @@
-extern crate chalk_rs;
-use chalk_rs::Chalk;
+extern crate lealang_chalk_rs;
+use lealang_chalk_rs::Chalk;
 
 fn main() {
 	let mut chalk = Chalk::new();
