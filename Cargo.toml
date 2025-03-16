@@ -1,6 +1,6 @@
 [package]
 name = "lealang_chalk_rs"
-version = "1.2.0"
+version = "1.2.1"
 authors = [
 	"Botahamec <botahamec@outlook.com>",
 	"Akshanabha Chakraborty <ahqsecret@gmail.com>",
